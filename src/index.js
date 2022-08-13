@@ -11,7 +11,10 @@ app.get("/", (req, res) => {
 
 app.use('/cdn', express.static(path.join(__dirname, 'public')));
 (async () => {
-    const browser = await pp.launch();
+    const browser = await pp.launch({
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
     app.get("/screenshot", async (req, res) => {
         let url = req.query.url;
         if (!url) {
